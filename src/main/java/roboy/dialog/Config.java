@@ -52,6 +52,8 @@ public class Config {
      * When NOROS=true, MEMORY can be either true or false. **/
     public static boolean MEMORY = true;
 
+    public static boolean UDP = false;
+
     /** Configuration file to store changing values. */
     private static String yamlConfigFile = "config.properties";
     private YAMLConfiguration yamlConfig;
@@ -141,6 +143,7 @@ public class Config {
         SHUTDOWN_ON_SERVICE_FAILURE = false;
         MEMORY = true;
         ROS_HOSTNAME = yamlConfig.getString("ROS_HOSTNAME");
+        UDP = true;
     }
 
     private void initializeYAMLConfig() {

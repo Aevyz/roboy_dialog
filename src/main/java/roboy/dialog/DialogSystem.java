@@ -97,14 +97,14 @@ public class DialogSystem {
             multiIn = new MultiInputDevice(new CommandLineInput());
             multiOut.add(new CommandLineOutput());
         } 
-        else if (Config.NODERED) {
+        else if (Config.UDP) {
             DatagramSocket ds = new DatagramSocket(55555);
             multiIn = new MultiInputDevice(new UdpInput(ds));
             // multiIn.add(new BingInput(rosMainNode));
             multiOut.add(new UdpOutput(ds, "localhost", 55556));
         }
         else {
-            multiIn.add(new BingInput(rosMainNode));
+            multiIn = new MultiInputDevice(new BingInput(rosMainNode));
             multiOut.add(new CommandLineOutput());
             multiOut.add(new CerevoiceOutput(rosMainNode));
         }
