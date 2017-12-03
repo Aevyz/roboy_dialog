@@ -21,7 +21,7 @@ import roboy.ros.RosMainNode;
 
 import static roboy.dialog.Config.ConfigurationProfile.*;
 
-
+import java.net.DatagramSocket;
 /**
  * The dialog manager's main class.
  * 
@@ -92,12 +92,20 @@ public class DialogSystem {
          * I/O INITIALIZATION
          */
         MultiInputDevice multiIn;
-        // By default, all output is also written to the command line.
-        MultiOutputDevice multiOut = new MultiOutputDevice(new CommandLineOutput());
+        MultiOutputDevice multiOut = new MultiOutputDevice();
         if(Config.NOROS) {
             multiIn = new MultiInputDevice(new CommandLineInput());
-        } else {
-            multiIn = new MultiInputDevice(new BingInput(rosMainNode));
+            multiOut.add(new CommandLineOutput());
+        } 
+        else if (Config.NODERED) {
+            DatagramSocket ds = new DatagramSocket(55555);
+            multiIn = new MultiInputDevice(new UdpInput(ds));
+            // multiIn.add(new BingInput(rosMainNode));
+            multiOut.add(new UdpOutput(ds, "localhost", 55556));
+        }
+        else {
+            multiIn.add(new BingInput(rosMainNode));
+            multiOut.add(new CommandLineOutput());
             multiOut.add(new CerevoiceOutput(rosMainNode));
         }
         // OPTIONAL INPUTS

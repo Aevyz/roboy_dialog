@@ -14,6 +14,10 @@ public class MultiOutputDevice implements OutputDevice{
 	
 	private ArrayList<OutputDevice> devices;
 
+	public MultiOutputDevice(){
+		this.devices = new ArrayList<>();
+	}
+
 	public MultiOutputDevice(OutputDevice device){
 		this.devices = new ArrayList<>();
 		devices.add(device);

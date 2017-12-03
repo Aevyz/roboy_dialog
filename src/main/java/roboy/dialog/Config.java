@@ -25,7 +25,8 @@ public class Config {
         NOROS("NOROS"),
         STANDALONE("STANDALONE"),
         DEBUG("DEBUG"),
-        MEMORY_ONLY("MEMORY-ONLY");
+        MEMORY_ONLY("MEMORY-ONLY"),
+        NODERED("NODERED");
 
         public String profileName;
 
@@ -75,6 +76,9 @@ public class Config {
                 break;
             case MEMORY_ONLY:
                 setMemoryProfile();
+                break;
+            case NODERED:
+                setNodeRedProfile();
                 break;
             default:
                 setDefaultProfile();
@@ -126,6 +130,14 @@ public class Config {
     private void setMemoryProfile() {
         NOROS = true;
         SHUTDOWN_ON_ROS_FAILURE = false;
+        SHUTDOWN_ON_SERVICE_FAILURE = false;
+        MEMORY = true;
+        ROS_HOSTNAME = yamlConfig.getString("ROS_HOSTNAME");
+    }
+
+    private void setNodeRedProfile() {
+        NOROS = false;
+        SHUTDOWN_ON_ROS_FAILURE = true;
         SHUTDOWN_ON_SERVICE_FAILURE = false;
         MEMORY = true;
         ROS_HOSTNAME = yamlConfig.getString("ROS_HOSTNAME");
