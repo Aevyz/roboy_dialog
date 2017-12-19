@@ -134,7 +134,6 @@ public class DialogSystem {
         System.out.println("DM initialized...");
 
         while(true) {
-
 //            while (!Vision.getInstance().findFaces()) {
 //                emotion.act(new FaceAction("angry"));
 //            }
@@ -147,19 +146,25 @@ public class DialogSystem {
             Interpretation interpretation;
             List<Action> actions = smallTalk.answer(new Interpretation(""));
 
-
-            while (actions.isEmpty() || !(actions.get(0) instanceof ShutDownAction)) {
-                multiOut.act(actions);
-                raw = multiIn.listen();
-                interpretation = new Interpretation(raw.sentence, raw.attributes); //TODO: Input devices should immediately produce Interpretation objects
-                for (Analyzer a : analyzers) {
-                    interpretation = a.analyze(interpretation);
+            String currentInput = multiIn.listen().sentence;
+            if(currentInput.contains("boy") || currentInput.contains("roboi") || currentInput.contains("roboboy") || currentInput.contains("robot")) {
+                while (actions.isEmpty() || !(actions.get(0) instanceof ShutDownAction)) {
+                    multiOut.act(actions);
+                    raw = multiIn.listen();
+                    interpretation = new Interpretation(raw.sentence, raw.attributes); //TODO: Input devices should immediately produce Interpretation objects
+                    for (Analyzer a : analyzers) {
+                        interpretation = a.analyze(interpretation);
+                    }
+                    actions = smallTalk.answer(interpretation);
                 }
-                actions = smallTalk.answer(interpretation);
+                List<Action> lastwords = ((ShutDownAction) actions.get(0)).getLastWords();
+                multiOut.act(lastwords);
+                actions.clear();
             }
-            List<Action> lastwords = ((ShutDownAction) actions.get(0)).getLastWords();
-            multiOut.act(lastwords);
-            actions.clear();
+            else
+            {
+                continue;
+            }
         }
 	}
 }

@@ -13,7 +13,7 @@ enum RosClients {
     FACEDETECTION("/speech_synthesis/talk", DetectFace._TYPE),
     OBJECTRECOGNITION("/speech_synthesis/talk", RecognizeObject._TYPE),
     STT("/roboy/cognition/speech/recognition", RecognizeSpeech._TYPE),
-    EMOTION("/roboy/control/face/emotion", ShowEmotion._TYPE),
+    EMOTION("/roboy/cogniton/face/emotion", ShowEmotion._TYPE),
     CREATEMEMORY("/roboy/cognition/memory/create", DataQuery._TYPE),
     UPDATEMEMORY("/roboy/cognition/memory/update", DataQuery._TYPE),
     GETMEMORY("/roboy/cognition/memory/get", DataQuery._TYPE),
