@@ -2,6 +2,7 @@ package roboy.dialog.personality.states;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import roboy.linguistics.Linguistics;
 import roboy.linguistics.Linguistics.SEMANTIC_ROLE;
@@ -18,20 +19,28 @@ public class IntroductionState extends AbstractBooleanState{
 	Interlocutor person = new Interlocutor();
 
 	private static final List<String> introductions = Lists.stringList(
-			"I am Roboy. Who are you?",
-			"My name is Roboy. What is your name?"
+//			"I am Roboy. Who are you?",
+//			"My name is Roboy. What is your name?",
+			"Ehm, sorry, who am I currently talking to?",
+			"Oh wow, who is this? My vision is in development",
+			"Obviously you know I am Roboy, but who are you?",
+			"Who is it there? Do I know you?"
 			);
 	
 	public IntroductionState(Interlocutor person) {
+		randomGenerator = new Random();
 		setFailureTexts(Lists.stringList(
 				"It's always nice to meet new people.",
+				"well, I'm pleased to meet you. ",
+				"nice to meet you",
 				"How refreshing to see a new face."));
 		this.person = person;
 	}
 	
 	@Override
 	public List<Interpretation> act() {
-		return Lists.interpretationList(new Interpretation(introductions.get((int)Math.random()*introductions.size())));
+		int index = randomGenerator.nextInt(introductions.size());
+		return Lists.interpretationList(new Interpretation(introductions.get(index)));
 	}
 
 	/**
@@ -66,6 +75,10 @@ public class IntroductionState extends AbstractBooleanState{
 			//TODO Currently assuming no duplicate names in memory. Support for last name addition needed.
 			person.addName(name);
 			if(!person.FAMILIAR) {
+				setFailureTexts(Lists.stringList(
+						"It's always nice to meet new people,"+name,
+						"well, I'm pleased to meet you, "+name,
+						"How refreshing to see a new face."));
 				return false;
 			}
 			setSuccessTexts(Lists.stringList(

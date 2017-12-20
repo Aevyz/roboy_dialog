@@ -1,8 +1,11 @@
 package roboy.dialog.personality.states;
 
 import java.util.List;
+import java.util.Random;
 
 import roboy.linguistics.sentenceanalysis.Interpretation;
+import roboy.talk.StatementBuilder;
+import roboy.talk.Verbalizer;
 import roboy.util.Lists;
 
 /**
@@ -14,6 +17,7 @@ public abstract class AbstractBooleanState implements State {
 
     protected State success;
     protected State failure;
+    protected Random randomGenerator;
     
     private List<String> successTexts = Lists.stringList("");
     private List<String> failureTexts = Lists.stringList("");
@@ -62,13 +66,29 @@ public abstract class AbstractBooleanState implements State {
     public Reaction react(Interpretation input)
     {
         boolean successful = determineSuccess(input);
-        if (successful) {
-            return new Reaction(success, Lists.interpretationList(
-            		new Interpretation(successTexts.get((int)(Math.random()*successTexts.size())))));
-        } else {
-            return new Reaction(failure, Lists.interpretationList(
-            		new Interpretation(failureTexts.get((int)(Math.random()*failureTexts.size())))));
+        String answer;
+        State next;
+        if(randomGenerator==null)
+        {
+            randomGenerator = new Random();
         }
+
+        if (successful) {
+            int index = randomGenerator.nextInt(successTexts.size());
+            answer = successTexts.get(index);
+            next = success;
+        } else {
+            int index = randomGenerator.nextInt(failureTexts.size());
+            answer = failureTexts.get(index);
+            next = failure;
+
+        }
+        if (this.getClass().getName().toLowerCase().contains("introduction")) {
+            answer += StatementBuilder.random(Verbalizer.introductionSegue);
+        }
+
+        return new Reaction(next, Lists.interpretationList(
+                new Interpretation(answer)));
     }
 
     /**

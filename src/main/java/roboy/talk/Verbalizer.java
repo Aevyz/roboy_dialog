@@ -40,7 +40,7 @@ public class Verbalizer {
 	}
 	
 	public static final List<String> greetings = 
-			Arrays.asList("hello","hi","greetings","good morning","howdy","good day","hey");
+			Arrays.asList("greeting to everyone here","hi there people","hello world","gruse gott","wazup wazup wazup","howdy human","good day ladies and gentlemen","hey hey hey you there");
 	
 	private SpeechAction greet(Interpretation interpretation){
 		return new SpeechAction(StatementBuilder.random(greetings));
@@ -61,17 +61,21 @@ public class Verbalizer {
 		return new SpeechAction(StatementBuilder.random(segues)
 				+ interpretation.getFeatures().get(Linguistics.ASSOCIATION));
 	}
-	
-	
+
+	public static final List<String> introductionSegue =
+			Arrays.asList(" I enjoy interacting with people, hope you do to!", " Would you mind is I ask you a few questions? " +
+					" I would like to know you better", " cool, lets chit chat like most humans do");
+
+
 	private static final List<String> preAnecdotes = 
-			Arrays.asList("here is an interesting bit of trivia. ", "how about this? ");
+			Arrays.asList("here is a thing, ", "here is an interesting bit of trivia. ", "how about this? ", "oh, ", "be the way, ");
 	private static final List<String> anecdotes = 
 			Arrays.asList("did you know ","did you know that ","i read that ",
 					"i heard that ", "have you heard this: ");
 	
 	private SpeechAction anecdote(Interpretation interpretation){
 		String prefix = Math.random()<0.3 ? StatementBuilder.random(preAnecdotes) : "";
-		return new SpeechAction(prefix+StatementBuilder.random(anecdotes)
+		return new SpeechAction(prefix
 				+ interpretation.getFeatures().get(Linguistics.SENTENCE));
 	}
 	
