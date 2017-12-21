@@ -32,6 +32,9 @@
     ["You are probably very poor doing ",""]
   ],
   "OTHER" : [
-    ["Other ",""]
+    ["You know what, I don't really care anymore about that. Let's switch the topic to ",""]
+  ],
+  "RANDOM" : [
+    ["","Well, what should I say to this matter... In case robots take over the world, I am so happy to be a robot, you suckers! "]
   ]
 }

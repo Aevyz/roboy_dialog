@@ -47,7 +47,10 @@ public class PersonalFollowUpState extends AbstractBooleanState{
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        } catch (NullPointerException e) {
+        	e.printStackTrace();
+		}
+
         return Lists.interpretationList(new Interpretation(String.format(questions.get((int)Math.random()*questions.size()), retrievedResult)));
 	}
 

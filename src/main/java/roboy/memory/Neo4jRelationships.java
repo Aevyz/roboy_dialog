@@ -15,7 +15,8 @@ public enum Neo4jRelationships {
     FRIEND_OF("FRIEND_OF"),
     MEMBER_OF("MEMBER_OF"),
     OTHER("OTHER"),
-    IS("IS");
+    IS("IS"),
+    RANDOM("RANDOM");
 
     public String type;
 

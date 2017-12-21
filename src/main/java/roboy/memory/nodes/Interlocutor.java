@@ -131,7 +131,7 @@ public class Interlocutor {
         if(relationship.equals(Neo4jRelationships.WORK_FOR.type)) return "Organization";
         if(relationship.equals(Neo4jRelationships.STUDY_AT.type)) return "Organization";
         if(relationship.equals(Neo4jRelationships.OCCUPIED_AS.type)) return "Occupation";
-        if(relationship.equals(Neo4jRelationships.OTHER.type)) return "Other";
+        if(relationship.equals(Neo4jRelationships.OTHER.type) || relationship.equals(Neo4jRelationships.RANDOM.type)) return "Other";
         else return "";
     }
 

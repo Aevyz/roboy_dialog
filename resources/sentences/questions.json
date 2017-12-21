@@ -59,6 +59,12 @@
     "What is your field of expertise?"
   ],
   "OTHER" : [
-    "Other"
+   "How's your life recently? New job? New friends? New robot?",
+   "I heard you make great burgers. Can you cook for me?" 
+  ],
+  "RANDOM" : [
+   "What about ditching your life and running away with me... Ehm, cycling away with me.. ha-ha. Just kidding, cant cycle yet either",  
+   "When I was a kid, I was afraid of robots. Were you as well?",
+   "Do you think robots will take over the world any time soon?"
   ]
 }

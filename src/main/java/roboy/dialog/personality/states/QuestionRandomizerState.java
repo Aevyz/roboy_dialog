@@ -60,19 +60,20 @@ public class QuestionRandomizerState implements State{
 		locationDBpedia.setFailure(this);
 		locationQuestion.setSuccess(locationDBpedia);
 		questionStates = new PersonalQAState[]{
-				locationQuestion,
-//				initializeQuestion(HAS_HOBBY),
-//				initializeQuestion(WORK_FOR),
-//				initializeQuestion(STUDY_AT)
+//				locationQuestion,
+				initializeQuestion(HAS_HOBBY),
+				initializeQuestion(WORK_FOR),
+//				initializeQuestion(STUDY_AT),
 // 		TODO request support for Occupation and Movie data in the database.
-			 initializeQuestion(OTHER),
-//			 initializeQuestion(LIKES_MOVIE),
+			 	initializeQuestion(OTHER),
+			 	initializeQuestion(RANDOM),
+//			 	initializeQuestion(LIKES_MOVIE),
 		};
 		followUpStates = new PersonalFollowUpState[] {
-				initializeFollowUpQuestion(FROM),
+//				initializeFollowUpQuestion(FROM),
 				initializeFollowUpQuestion(HAS_HOBBY),
 				initializeFollowUpQuestion(WORK_FOR),
-				initializeFollowUpQuestion(STUDY_AT)
+//				initializeFollowUpQuestion(STUDY_AT)
 		};
 	}
 
@@ -90,7 +91,7 @@ public class QuestionRandomizerState implements State{
 		//List<Triple> infos = memory.retrieve(new Triple(null,name,null));
 		//infos.addAll(memory.retrieve(new Triple(null,null,name)));
 		//TODO why this if statement?
-		if(Math.random()<1){
+		if(Math.random()<0.7){
 			int index = (int) (Math.random()*questionStates.length);
 			if(!alreadyAsked.get(questionStates[index].predicate)){
 				alreadyAsked.put(questionStates[index].predicate, true);

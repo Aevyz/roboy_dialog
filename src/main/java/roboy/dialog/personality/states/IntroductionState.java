@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import org.bytedeco.javacv.FrameFilter;
 import roboy.linguistics.Linguistics;
 import roboy.linguistics.Linguistics.SEMANTIC_ROLE;
 import roboy.linguistics.sentenceanalysis.Interpretation;
@@ -39,7 +40,7 @@ public class IntroductionState extends AbstractBooleanState{
 		setFailureTexts(Lists.stringList(
 				"It's always nice to meet new people.",
 				"well, I'm pleased to meet you. ",
-				"nice to meet you",
+				"nice to meet you.",
 				"How refreshing to see a new face."));
 		this.person = person;
 	}
@@ -90,7 +91,7 @@ public class IntroductionState extends AbstractBooleanState{
 			}
             String retrievedResult = "";
             ArrayList<Integer> ids = person.getRelationships(predicate);
-            if (!ids.isEmpty()) {
+            if (ids!=null) {
                 memory = Neo4jMemory.getInstance();
                 try {
                     for (int i = 0; i < ids.size() && i < 3; i++) {
@@ -98,9 +99,7 @@ public class IntroductionState extends AbstractBooleanState{
                         retrievedResult += requestedObject.getProperties().get("name").toString();
                         retrievedResult += " and ";
                     }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
