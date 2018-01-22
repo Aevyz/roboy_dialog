@@ -114,7 +114,16 @@ public class SmallTalkPersonality implements Personality {
             }
 
             // Get state-dependent reaction.
-            Reaction reaction = state.react(input);
+            Reaction reaction;
+            try {
+                reaction = state.react(input);
+            }
+            catch (NullPointerException e) {
+                reaction = new WildTalkState(rosMainNode).react(input);
+                reaction.setState(new QuestionAnsweringState(new WildTalkState(rosMainNode)));
+
+            }
+
             // Add connecting phrases.
             if (name != null && Math.random() < 0.3) { // TODO: this should go in the Verbalizer
                 List<String> namePhrases = Arrays.asList("So %s, ", "Hey %s, ", "%s, listen to me, ", "oh well, %s, ", "%s, ");
@@ -130,7 +139,14 @@ public class SmallTalkPersonality implements Personality {
             try {
                 // Move on to the next state and execute the intentions stage.
                 state = reaction.getState();
-                intentions = state.act();
+                try {
+                    intentions = state.act();
+                }
+                catch (NullPointerException e)
+                {
+                    intentions = (new WildTalkState(rosMainNode)).act();
+                }
+//                intentions = state.act();
                 for (Interpretation i : intentions) {
                     act.add(verbalizer.verbalize(i));
                 }
@@ -178,6 +194,7 @@ public class SmallTalkPersonality implements Personality {
         qa.setTop(qa);
         answer.setTop(qa);
         wild.setNextState(qa);
+        qa.setNextState(answer);
 
         state = greetings;
     }

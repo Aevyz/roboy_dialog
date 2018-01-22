@@ -28,7 +28,7 @@ public class QuestionAskingState implements State
 //    private SmallTalkPersonality smallTalkPersonality;
 	private Concept objectOfFocus;
 	private String currentIntent;
-	private static final int TOASK = 2;
+	private static final int TOASK = 4;
 	private int questionsCount;
 	private Map<String, List<String>> questions;
 	private Random generator;

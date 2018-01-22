@@ -98,6 +98,7 @@ public class DialogSystem {
             multiIn = new MultiInputDevice(new CommandLineInput());
         } else {
             multiIn = new MultiInputDevice(new BingInput(rosMainNode));
+//            multiIn = new MultiInputDevice(new CommandLineInput());
             multiOut.add(new CerevoiceOutput(rosMainNode));
         }
         // OPTIONAL INPUTS
@@ -109,6 +110,7 @@ public class DialogSystem {
         // multiOut.add(new BingOutput());
         // multiOut.add(new UdpOutput(ds, "localhost", 55556));
         // multiOut.add(new EmotionOutput(rosMainNode));
+//        multiOut.add(new CommandLineOutput());
 
         /*
          * ANALYZER INITIALIZATION

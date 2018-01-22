@@ -28,7 +28,8 @@ public class QuestionRandomizerState implements State{
 	private State inner;
 	private State chosenState;
 	private Interlocutor person;
-	boolean askFollowUp = true;
+	boolean askFollowUp = false;
+	State next;
 
 	// All spoken phrases for asking questions are stored in these JSON files.
 	String questionsFile = "sentences/questions.json";
@@ -145,5 +146,8 @@ public class QuestionRandomizerState implements State{
 			}
 		}
 	}
-	
+
+	public void setNextState(State next){
+		this.next = next;
+	}
 }
