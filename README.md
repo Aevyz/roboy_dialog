@@ -15,18 +15,66 @@ The implementation of the pipeline is in Java. Integrations with tools in other 
 
 ## How to run it
 
-The repository contains a project that can be readily imported into Eclipse. Best use the EGit Eclipse Plugin to check it out. The code can be executed by running de.roboy.dialog.DialogSystem.
+The repository contains a project that can be readily imported into Eclipse. Best use the EGit Eclipse Plugin to check it out. The code can be executed by running roboy.dialog.ConversationManager.
 
-**UPD** (maven related)
+#### Building
+
 In order to compile, in the directory containing `pom.xml` run: 
 ```
-mvn compile
+mvn clean install
 ```
 
-To execute:
+#### Make sure that ROS master is available
+
+Dialog is tied into the Roboy architecture as a ROS node.
+Therefore, make sure to set the following environment variables to meaningful values:
+```bash
+export ROS_HOSTNAME=local-hostname
+export ROS_MASTER_URI=http://rosmaster:11311
 ```
-mvn exec:java -Dexec.mainClass="roboy.dialog.DialogSystem"
+
+If no remote development instance of ROS master is available, just run
+`roscore` in a [docker container](http://wiki.ros.org/docker/Tutorials/Docker).
+
+#### Make sure that Neo4J is running
+
+The dialog system's memory module uses Neo4j, a graph database which is
+stores relations between enttities observed by roboy (names, hobbies, locations etc.).
+Therefore, make sure to set the following environment variables to meaningful values:
+```bash
+export NEO4J_ADDRESS=bolt://my-neo4j-database:7687                
+export NEO4J_USERNAME=user
+export NEO4J_PASSWORD=pass
 ```
+
+If no remote development instance of Neo4j is available, just run
+`Neo4j` in a [docker container](https://neo4j.com/developer/docker/#_how_to_use_the_neo4j_docker_image). For more options and additional information, refer to `docs/Usage` in the
+memory module.
+
+#### Running the Dialog System
+
+Once the ROS and Neo4j dependencies are satisfied, run the dialog system via
+```bash
+java -Xmx6g -d64 -cp dialog/target/roboy-dialog-system-2.1.9-jar-with-dependencies.jar \
+    roboy.dialog.ConversationManager
+```
+
+#### Running NLU only
+
+```bash
+java -Xmx6g -d64 -cp \
+    nlu/parser/target/roboy-parser-2.0.0-jar-with-dependencies.jar \
+    edu.stanford.nlp.sempre.roboy.SemanticAnalyzerInterface.java
+```
+
+#### Using the Google Word2Vec Model in NLU
+
+For a more complete but also much more memory-intensive Word Vector model,
+the NLU module has the ability to parse the GoogleNews word vector collection,
+which can be retrieved from [here](https://s3.amazonaws.com/dl4j-distribution/GoogleNews-vectors-negative300.bin.gz).
+
+In order to use it, store and extract it under `resources_nlu/word2vec`. Then just set
+`WORD2VEC_GOOGLE: true` in `parser.properties`.
 
 ## How to extend it
 
@@ -41,4 +89,4 @@ Pick the corresponding interface, depending on which part of the system you want
 |Action type     |de.roboy.dialog.action.Action|
 |Output device   |de.roboy.io.OutputDevice|
 
-The interfaces are deliberately simple, containing only 0 - 2 methods that have to be implemented. Once you implemented your new classes include them in the personality used in de.roboy.dialog.DialogSystem, if you only implemented single states or directly in de.roboy.dialog.DialogSystem for everything else.
+The interfaces are deliberately simple, containing only 0 - 2 methods that have to be implemented. Once you implemented your new classes include them in the personality used in roboy.dialog.ConversationManager, if you only implemented single states or directly in de.roboy.dialog.DialogSystem for everything else.
