@@ -6,6 +6,23 @@
 Roboy Dialog System
 ===========================================================
 
+asd
+
+.. raw:: html 
+
+    <details>  
+    <h2>Local Address Example</h2> 
+    <p> 
+        export ROS_MASTER_URI="http://127.0.0.1:11311" 
+        export ROS_HOSTNAME="127.0.0.1" 
+        export NEO4J_ADDRESS="bolt://127.0.0.1:7687" 
+        export NEO4J_USERNAME="neo4j" 
+        export NEO4J_PASSWORD="neo4jpassword" 
+        export REDIS_URI="redis://localhost:6379/0" 
+        export REDIS_PASSWORD="root"  
+    </p>  
+    </details> 
+
 The Roboy Dialog System (RDS) is a sophisticated software module representing the cognitive capabilities
 of the humanoid anthropomimetic robot Roboy.
 The goal of the project is to implement dialog routines and knowledge extraction for a realistic human-like
